@@ -40,7 +40,7 @@ TBD
 
 ### Step 1: Auth
 
-Build a GET request to request a Spotify user's authentication
+Build and return a GET request for a Spotify user's authentication
 
 ```javascript
 // Login.jsx
@@ -55,10 +55,7 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 - `public`
 - `src`
   - `assets`
-  - `App.css`
-  - `App.jsx`
-  - `index.jsx`
-  - `index.css`
+  - `App.jsx`: Pass through our Login component
   - `Login.jsx`: Where we build and send a GET request to request a Spotify user's authorization
   - `main.jsx`
 - `index.html`
@@ -70,21 +67,24 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 
 ### CSS
 
-TBD
+Using Bootstrap (imported in `App.jsx`) and Rect Bootstrap.
 
 ### The Code Itself
 
-TBD
+Style Guide notes TBD
 
 ### Accessibility
 
-TBD
+Lighthouse Reports TBD
 
 ---
 
 ## Tech Stack & Tools
 
-- React via Vite
+- React via [Vite](https://vitejs.dev/)
+- [Spotify for Developers](https://developer.spotify.com/)
+- Bootstrap
+- React Bootstrap
 
 ---
 
