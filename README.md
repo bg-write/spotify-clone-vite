@@ -4,14 +4,6 @@
 
 ![Spotify clone login page](https://doodleipsum.com/700?bg=D96363&i=2950d197771be2105d7d9a91975907bc)
 
-## This Spotify Clone in One Sentence
-
-TBD
-
-## This Spotify Clone Explained in One Minute
-
-TBD
-
 ## The Problem
 
 TBD
@@ -28,7 +20,13 @@ TBD
 
 ## Getting Started (On Your Local Machine)
 
-In your IDE of choice, in an open terminal window, enter and run `npm run dev` and open the server URL provided in the terminal output.
+Frontend
+
+- In your IDE of choice, in an open terminal window, enter and run `npm run dev` and open the server URL provided in the terminal output.
+
+Backend
+
+- TBD
 
 ## Running Tests
 
@@ -48,15 +46,56 @@ Build and return a GET request for a Spotify user's authentication
 const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}`;
 ```
 
+### Step 2: The server
+
+Initiate `server` and add in our info regarding Express, Nodemon, and Spotify Web API Node.
+
+```javascript
+// server.js
+
+const express = require('express');
+const SpotifyWebAPI = require('spotify-web-api-node');
+
+const app = express();
+
+const REDIRECT_URI = 'XXX';
+
+app.post('/login', (req, res) => {
+	const code = req.body.code;
+
+	const spotifyApi = new SpotifyWebAPI({
+		redirectUri: REDIRECT_URI,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+	});
+
+	spotifyApi
+		.authorizationCodeGrant(code)
+		.then((data) => {
+			res.json({
+				accessToken: data.body.access_token,
+				refreshToken: data.body.refresh_token,
+				expiresIn: data.body.expires_in,
+			});
+		})
+		.catch(() => {
+			res.sendStatus(400);
+		});
+});
+```
+
 ---
 
 ## Architecture
 
 - `public`
+- `server`
+  - `server.js`: All info regarding our backend
 - `src`
   - `assets`
   - `App.jsx`: Pass through our Login component
-  - `Login.jsx`: Where we build and send a GET request to request a Spotify user's authorization
+  - `Dashboard.jsx`: XXX
+  - `Login.jsx`: Where we build and send auth GET requests
   - `main.jsx`
 - `index.html`
 - `vite.config.js`
@@ -67,7 +106,7 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 
 ### CSS
 
-Using Bootstrap (imported in `App.jsx`) and Rect Bootstrap.
+Using Bootstrap, imported in `App.jsx`, and Rect Bootstrap.
 
 ### The Code Itself
 
@@ -79,12 +118,20 @@ Lighthouse Reports TBD
 
 ---
 
-## Tech Stack & Tools
+## Tech Stack, Tools & Resources
+
+Frontend
 
 - React via [Vite](https://vitejs.dev/)
 - [Spotify for Developers](https://developer.spotify.com/)
-- Bootstrap
-- React Bootstrap
+- [Bootstrap](https://www.npmjs.com/package/bootstrap)
+- [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
+
+Backend
+
+- [Express](https://www.npmjs.com/package/express)
+- [Nodemon](https://www.npmjs.com/package/nodemon)
+- [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
 
 ---
 
