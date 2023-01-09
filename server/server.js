@@ -10,6 +10,32 @@ app.use(bodyParser.json());
 
 const REDIRECT_URI = 'http://localhost:5173/';
 
+// keep users logged in
+app.post('/refresh', (req, res) => {
+	const refreshToken = req.body.refreshToken;
+
+	const spotifyApi = new SpotifyWebAPI({
+		redirectUri: REDIRECT_URI,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		refreshToken,
+	});
+
+	spotifyApi
+		.refreshAccessToken()
+		.then((data) => {
+			res.json({
+				accessToken: data.body.accessToken,
+				expiresIn: data.body.expiresIn,
+			});
+		})
+		.catch((error) => {
+			console.log(error);
+			res.sendStatus(400);
+		});
+});
+
+// set up our auth
 app.post('/login', (req, res) => {
 	const code = req.body.code;
 

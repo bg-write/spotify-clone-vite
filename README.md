@@ -38,7 +38,7 @@ TBD
 
 ### Step 1: Auth
 
-Build and return a GET request for a Spotify user's authentication
+Build and return a GET request for a Spotify user's authentication via the `Login` component.
 
 ```javascript
 // Login.jsx
@@ -153,21 +153,91 @@ export default function Dashboard({ code }) {
 }
 ```
 
+### Step 4: Refresh Token Automatically
+
+Update our auth so that users don't have to keep logging in after each hour. We do this by adding XXX to `useAuth` and XXX to our `server`.
+
+```javascript
+// useAuth.jsx
+
+useEffect(() => {
+		console.log('mounting ...');
+		if (!refreshToken || !expiresIn) return;
+
+		const interval = setInterval(() => {
+			axios
+				.post('XXX/refresh', {
+					refreshToken,
+				})
+				.then((res) => {
+					setAccessToken(res.data.accessToken);
+					setExpiresIn(res.data.expiresIn);
+				})
+				.catch(() => {
+					window.location = '/';
+				});
+		}, (expiresIn - 60) * 1000);
+
+		return () => {
+			console.log('unmounting ...');
+			clearInterval(interval);
+		};
+	}, [refreshToken, expiresIn]);
+```
+
+```javascript
+// server.js
+
+app.post('/refresh', (req, res) => {
+	const refreshToken = req.body.refreshToken;
+
+	const spotifyApi = new SpotifyWebAPI({
+		redirectUri: REDIRECT_URI,
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		refreshToken,
+	});
+
+	spotifyApi
+		.refreshAccessToken()
+		.then((data) => {
+			res.json({
+				accessToken: data.body.accessToken,
+				expiresIn: data.body.expiresIn,
+			});
+		})
+		.catch((error) => {
+			console.log(error);
+			res.sendStatus(400);
+		});
+});
+```
+
+### Step 5: Adding Search Functionality
+
+TBD
+
+```javascript
+//
+
+
+```
+
 ---
 
-## Architecture
+## Public Architecture
 
 - `public`
 - `server`
-  - `server.js`: All info regarding our backend
+  - `server.js`: All info regarding our backend and middleware
 - `src`
   - `assets`
-  - `App.jsx`: Pass through our components to display based on user auth
+  - `App.jsx`: Pass through our components
   - `Dashboard.jsx`: What users see after logging in
   - `Login.jsx`: Where we build and send our auth GET request
   - `main.jsx`: We disable "StrictMode" until a future React update addresses useEffect running twice
+  - `useAuth.jsx`: Stores all our custom hooks
 - `index.html`: Our HTML include basic meta information
-- `vite.config.js`: Vite's take on the config file
 
 ---
 
@@ -202,15 +272,16 @@ Backend
 - [Express](https://www.npmjs.com/package/express)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
-- [dotenv](https://www.npmjs.com/package/dotenv)
-- [cors](https://www.npmjs.com/package/cors)
-- [body parser](https://www.npmjs.com/package/body-parser)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Cors](https://www.npmjs.com/package/cors)
+- [Body parser](https://www.npmjs.com/package/body-parser)
 
 ---
 
 ## Next Steps (my "Icebox")
 
-- Fully adopt Airbnb's JS coding style guide
+- Follow WDS repo for new server fixes
+- Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
 - Reutilize React's StrictMode and update `useAuth.jsx` to account for useEffect() firing twice
 
