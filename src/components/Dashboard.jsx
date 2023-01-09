@@ -4,7 +4,7 @@ import TrackSearchResult from './TrackSearchResult';
 import Player from './Player';
 import { Container, Form } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-node';
-import spotifyIconBlack from './assets/Spotify_Icon_RGB_Black.png';
+import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: '825aa066f2c24b53ba324f21a373e94a',

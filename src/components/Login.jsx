@@ -4,7 +4,7 @@ https://developer.spotify.com/documentation/general/guides/authorization/code-fl
 */
 
 import { Container } from 'react-bootstrap';
-import spotifyIconBlack from './assets/Spotify_Icon_RGB_Black.png';
+import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
 
 const GET = 'https://accounts.spotify.com/authorize';
 const CLIENT_ID = '825aa066f2c24b53ba324f21a373e94a';

@@ -374,14 +374,16 @@ let albumArtwork = playingTrack
 - `server`
   - `server.js`: All info regarding our backend and middleware
 - `src`
-  - `App.jsx`: Pass through our components
-  - `Dashboard.jsx`: What users see after logging in
-  - `Login.jsx`: Where we build and send our auth GET request
-  - `main.jsx`: We disable "StrictMode" until a future React update addresses useEffect running twice
-  - `Player.jsx`: Holds functionality of actually listening to Spotify through our app
-  - `TrackSearchResult`: Where we display the results of our logic in `Dashboard`
-  - `useAuth.jsx`: Stores all our custom hooks
-- `index.html`: Our HTML include basic meta information
+  - `assets`: Home to Spotify logo images
+  - `components`
+    - `Dashboard.jsx`: What users see after logging in
+    - `Login.jsx`: Where we build and send our auth GET request
+    - `Player.jsx`: Holds Spotify player functionality
+    - `TrackSearchResult`: Results seen in the Dashboard
+    - `useAuth.jsx`: Stores all our custom hooks
+  - `App.jsx`: Pass through our Dashboard and Login
+  - `main.jsx`: "StrictMode" disabled to address useEffect
+- `index.html`: Our HTML with basic meta information
 
 ---
 
@@ -431,10 +433,11 @@ Backend
 
 - Follow WDS and previous repo for new server fixes (especially `Dashboard` and `Login` and `Player`)
 - Need to make images look better when enlarged on `Dashboard`
-- Flesh out the footer (refer to Candyfloss)
+- Flesh out the footer in `Dashboard` (refer to Candyfloss)
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
-- Simplify the Dashboard - there's a lot of code in there and can likely break down into more components
+- Simplify `Dashboard` - there's a lot of code in there and can likely break down into more components
+- Create a 404 page
 - Anything I can include from my own "I Love That Song" project?
 - Reutilize React's StrictMode and update `useAuth` to account for useEffect() firing twice
 
