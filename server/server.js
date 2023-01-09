@@ -1,15 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-// const bodyParser = require('body-parser');
-const lyricsFinder = require('lyrics-searcher');
 const SpotifyWebAPI = require('spotify-web-api-node');
 
 const app = express();
 
 app.use(cors());
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -61,13 +57,6 @@ app.post('/login', (req, res) => {
 			console.log(error);
 			res.sendStatus(400);
 		});
-});
-
-// loading in lyrics
-app.get('/lyrics', async (req, res) => {
-	const lyrics =
-		(await lyricsFinder(req.query.artist, req.query.track)) || 'No Lyrics Found';
-	res.json({ lyrics });
 });
 
 app.listen(3001); // make sure 3001 matches our axios calls in "useAuth" and "Dashboard"

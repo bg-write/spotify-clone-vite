@@ -1,4 +1,4 @@
-# Spotify Clone Vite: A minimalist full-stack rebuild of Spotify with a lyric generator - built with React and Spotify's API by Brady Gerber
+# Spotify Clone Vite: A minimalist full-stack rebuild of Spotify with album art generator - built with React and Spotify's API by Brady Gerber
 
 [![GitHub issues](https://img.shields.io/github/issues/bg-write/spotify-clone-vite?style=flat-square)](https://github.com/bg-write/spotify-clone-vite/issues)
 
@@ -48,7 +48,7 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 
 ### Step 2: Server
 
-Initiate `server` with all our needed middleware and server information, including where we start using Spotify Web API Node). We also add our new server script to its own `package.json`).
+Initiate `server` with all our needed middleware and server info, including where we start using Spotify Web API Node. We also add our new server script to its own `package.json`.
 
 ```javascript
 // server.js
@@ -93,7 +93,7 @@ app.listen(3001);
 
 ### Step 3: "useAuth" Hook
 
-Create a `Dashboard` component rendering our `Login` component depending on if a user has gone through auth or not.
+Create a `Dashboard` component that renders our `Login` depending on if a user has gone through auth or not.
 
 ```javascript
 // App.jsx
@@ -107,7 +107,7 @@ function App() {
 
 Then create a custom hook (`useAuth`) to move the auth process away from the browser into our state and `Dashboard` while also incorporating our new server.
 
-(WINTER 2023 NOTE: The React 18 update now runs useEffect twice instead of once; while we wait for a future React update, I've updated `main.jsx`) to disable "StrictMode.")
+(WINTER 2023 NOTE: The React 18 update now runs useEffect twice instead of once; while we wait for a future React update, I've updated `main.jsx` to disable "StrictMode.")
 
 ```javascript
 // useAuth.jsx
@@ -155,7 +155,7 @@ export default function Dashboard({ code }) {
 
 ### Step 4: Refresh Tokens Automatically
 
-Update and add to our `useAuth` and `server` so that users don't have to keep logging in after each hour.
+Update `useAuth` and `server` so that users don't have to keep logging in after each hour.
 
 ```javascript
 // useAuth.jsx
@@ -215,7 +215,7 @@ app.post('/refresh', (req, res) => {
 
 ### Step 5: Search Functionality
 
-Update our `Dashboard` with more useEffects, including our Spotify search query that we'll then map and pass along to our new component, `TrackSearchResult`.
+Update `Dashboard` with more useEffects, including our Spotify search query that we'll then map and pass along to our new `TrackSearchResult` component.
 
 ```javascript
 // Dashboard.jsx
@@ -355,38 +355,16 @@ export default function TrackSearchResult({ track, chooseTrack }) {
 }
 ```
 
-### Step 7: Display Song Lyrics
+### Step 7: Display Song Album Artwork
 
-And finally, for the initial build, update `Dashboard` with a new useEffect to return lyrics and add the "lyrics finder" package to our `server`.
+Take advantage of our "playingTrack" state and store it into a simple ternary variable we'll display in `Dashboard`.
 
 ```javascript
 // Dashboard.jsx
 
-useEffect(() => {
-	if (!playingTrack) return;
-
-	axios
-		.get('XXX/lyrics', {
-			params: {
-				track: playingTrack.title,
-				artist: playingTrack.artist,
-			},
-		})
-		.then((res) => {
-			setLyrics(res.data.lyrics);
-		});
-}, [playingTrack]);
-```
-
-```javascript
-// server.js
-
-app.get('/lyrics', async (req, res) => {
-	const lyrics =
-		(await lyricsFinder(req.query.artist, req.query.track)) || 'No Lyrics Found';
-	res.json({ lyrics });
-});
-
+let albumArtwork = playingTrack
+	? playingTrack.albumUrl
+	: 'https://picsum.photos/500';
 ```
 
 ---
@@ -428,6 +406,7 @@ Lighthouse Reports TBD
 Overall
 
 - [Spotify for Developers](https://developer.spotify.com/)
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api/reference/#/)
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
 
 Frontend
@@ -445,24 +424,26 @@ Backend
 - [Cors](https://www.npmjs.com/package/cors)
 - [Body Parser](https://www.npmjs.com/package/body-parser)
 - [Dotenv](https://www.npmjs.com/package/dotenv)
-- [Lyrics finder](https://www.npmjs.com/package/lyrics-finder)
 
 ---
 
 ## Next Steps (my "Icebox")
 
 - Follow WDS and previous repo for new server fixes
+- Need to make images look better when enlarged on `Dashboard`
 - Flesh out the footer (refer to Candyfloss)
+- Make this repo public!
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
 - Simplify the Dashboard - there's a lot of code in there and can likely break down into more components
+- Anything I can include from my own "I Love That Song" project?
 - Reutilize React's StrictMode and update `useAuth` to account for useEffect() firing twice
 
 ---
 
 ## Closing Credits
 
-A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and initial setup of this clone.
+A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and the initial setup of this clone.
 
 ---
 

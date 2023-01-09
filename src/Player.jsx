@@ -8,6 +8,9 @@ export default function Player({ accessToken, trackUri }) {
 	useEffect(() => setPlay(true), [trackUri]);
 
 	if (!accessToken) return null;
+
+	// see full list of Player options
+	// https://www.npmjs.com/package/react-spotify-web-playback
 	return (
 		<SpotifyPlayer
 			token={accessToken}

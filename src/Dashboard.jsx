@@ -4,7 +4,6 @@ import TrackSearchResult from './TrackSearchResult';
 import Player from './Player';
 import { Container, Form } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-node';
-import axios from 'axios';
 
 const CLIENT_ID = '825aa066f2c24b53ba324f21a373e94a';
 
@@ -17,31 +16,11 @@ export default function Dashboard({ code }) {
 	const [search, setSearch] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [playingTrack, setPlayingTrack] = useState();
-	const [lyrics, setLyrics] = useState('');
 
 	function chooseTrack(track) {
 		setPlayingTrack(track);
 		setSearch('');
-		setLyrics('');
 	}
-
-	// access lyrics
-	useEffect(() => {
-		if (!playingTrack) return;
-		axios
-			.get('http://localhost:3001/lyrics', {
-				// be mindful of this URL and that this is actually from our server!
-				params: {
-					track: playingTrack.title,
-					artist: playingTrack.artist,
-				},
-			})
-			.then((res) => {
-				setLyrics(res.data.lyrics);
-			}).catch((error) => {
-				console.log('Lyrics ERROR', error)
-			});
-	}, [playingTrack]);
 
 	// update Spotify when our access token updates
 	useEffect(() => {
@@ -85,6 +64,11 @@ export default function Dashboard({ code }) {
 		return () => (cancel = true);
 	}, [search, accessToken]);
 
+	// return album artwork of current song
+	let albumArtwork = playingTrack
+		? playingTrack.albumUrl
+		: 'https://picsum.photos/500';
+
 	return (
 		<Container className="d-flex flex-column py-2" style={{ height: '100vh' }}>
 			<Form.Control
@@ -104,7 +88,11 @@ export default function Dashboard({ code }) {
 				))}
 				{searchResults.length === 0 && (
 					<div className="text-center" style={{ whiteSpace: 'pre' }}>
-						{lyrics}
+						<img
+							src={albumArtwork}
+							className="justify-content-center align-items-center"
+							style={{ height: '75vh' }}
+						/>
 					</div>
 				)}
 			</div>
