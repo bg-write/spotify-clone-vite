@@ -1,7 +1,6 @@
-export default function TrackSearchResult({ track }) {
+export default function TrackSearchResult({ track, chooseTrack }) {
 	function handlePlay() {
-		// chooseTrack(track);
-		console.log('clicked!');
+		chooseTrack(track);
 	}
 
 	return (

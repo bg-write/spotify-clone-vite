@@ -288,20 +288,86 @@ export default function TrackSearchResult({ track }) {
 }
 ```
 
+### Step 6: Actually Play Music
+
+Create the `Player` component and add in the React Spotify Web Playback package to give us functionality to actually play specific songs. Update `Dashboard` and `TrackSearchResult` accordingly.
+
+```javascript
+// Player.jsx
+
+export default function Player({ accessToken, trackUri }) {
+	const [play, setPlay] = useState(false);
+
+	useEffect(() => setPlay(true), [trackUri]);
+
+	if (!accessToken) return null;
+	return (
+		<SpotifyPlayer
+			token={accessToken}
+			showSaveIcon
+			callback={(state) => {
+				if (!state.isPlaying) setPlay(false);
+			}}
+			play={play}
+			uris={trackUri ? [trackUri] : []}
+		/>
+	);
+}
+```
+
+```javascript
+// Dashboard.jsx
+
+const [playingTrack, setPlayingTrack] = useState();
+
+function chooseTrack(track) {
+	setPlayingTrack(track);
+	setSearch('');
+}
+
+...
+
+<div>
+	<Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+</div>
+```
+
+```javascript
+// TrackSearchResult.jsx
+
+export default function TrackSearchResult({ track, chooseTrack }) {
+	function handlePlay() {
+		chooseTrack(track);
+	}
+
+	return (
+		<div
+			className="d-flex m-2 align-items-center"
+			style={{ cursor: 'pointer' }}
+			onClick={handlePlay}>
+			<img src={track.albumUrl} style={{ height: '64px', width: '64px' }} />
+			<div className="ml-3">
+				<div>{track.title}</div>
+				<div className="text-muted">{track.artist}</div>
+			</div>
+		</div>
+	);
+}
+```
+
 ---
 
-## Public Architecture
+## Code Architecture
 
-- `public`
 - `server`
   - `server.js`: All info regarding our backend and middleware
 - `src`
-  - `assets`
   - `App.jsx`: Pass through our components
   - `Dashboard.jsx`: What users see after logging in
   - `Login.jsx`: Where we build and send our auth GET request
   - `main.jsx`: We disable "StrictMode" until a future React update addresses useEffect running twice
-  - `TrackSearchResult`: TBD
+  - `Player.jsx`: Holds functionality of actually listening to Spotify through our app
+  - `TrackSearchResult`: Where we display the results of our logic in `Dashboard`
   - `useAuth.jsx`: Stores all our custom hooks
 - `index.html`: Our HTML include basic meta information
 
@@ -336,6 +402,7 @@ Frontend
 - [Axios](https://www.npmjs.com/package/axios#installing)
 - [Bootstrap](https://www.npmjs.com/package/bootstrap)
 - [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
+- [React Spotify Web Playback](https://www.npmjs.com/package/react-spotify-web-playback)
 
 Backend
 
@@ -349,10 +416,12 @@ Backend
 
 ## Next Steps (my "Icebox")
 
-- Follow WDS repo for new server fixes
+- Follow WDS and previous repo for new server fixes
+- Flesh out the footer (refer to Candyfloss)
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
-- Reutilize React's StrictMode and update `useAuth.jsx` to account for useEffect() firing twice
+- Simplify the Dashboard - there's a lot of code in there and can likely break down into more components
+- Reutilize React's StrictMode and update `useAuth` to account for useEffect() firing twice
 
 ---
 
