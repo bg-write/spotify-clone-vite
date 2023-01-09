@@ -1,8 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const SpotifyWebAPI = require('spotify-web-api-node');
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
 const REDIRECT_URI = 'http://localhost:5173/';
 
@@ -24,9 +28,10 @@ app.post('/login', (req, res) => {
 				expiresIn: data.body.expires_in,
 			});
 		})
-		.catch(() => {
+		.catch((error) => {
+			console.log(error);
 			res.sendStatus(400);
 		});
 });
 
-// https://vitejs.dev/guide/ssr.html
+app.listen(3001); // make sure 3001 matches our axios call in "useAuth.jsx"

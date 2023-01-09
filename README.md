@@ -26,7 +26,7 @@ Frontend
 
 Backend
 
-- TBD
+- In another open terminal, CD into `server` and run `npm run devStart`.
 
 ## Running Tests
 
@@ -34,7 +34,7 @@ TBD
 
 ---
 
-## Steps To Creating This Clone, Then Expanding
+## Steps To Building This Clone
 
 ### Step 1: Auth
 
@@ -48,15 +48,19 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 
 ### Step 2: The server
 
-Initiate `server` and add in our info regarding Express, Nodemon, and Spotify Web API Node.
+Initiate `server` with all our needed middleware and server information, including where we start using Spotify Web API Node). We also add our new server script to its own `package.json`).
 
 ```javascript
 // server.js
 
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const SpotifyWebAPI = require('spotify-web-api-node');
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
 const REDIRECT_URI = 'XXX';
 
@@ -78,10 +82,75 @@ app.post('/login', (req, res) => {
 				expiresIn: data.body.expires_in,
 			});
 		})
-		.catch(() => {
+		.catch((error) => {
+			console.log(error);
 			res.sendStatus(400);
 		});
 });
+
+app.listen(3001);
+```
+
+### Step 3: "useAuth" Hook
+
+Create a `Dashboard` component rendering our `Login` component depending on if a user has gone through auth or not.
+
+```javascript
+// App.jsx
+
+const code = new URLSearchParams(window.location.search).get('code');
+
+function App() {
+	return code ? <Dashboard code={code} /> : <Login />;
+}
+```
+
+Then create a custom hook (`useAuth`) to move the auth process away from the browser into our state and `Dashboard` while also incorporating our new server.
+
+(WINTER 2023 NOTE: The React 18 update now runs useEffect twice instead of once; while we wait for a future React update, I've updated `main.jsx`) to disable "StrictMode.")
+
+```javascript
+// useAuth.jsx
+
+export default function useAuth(code) {
+	const [accessToken, setAccessToken] = useState();
+	const [refreshToken, setRefreshToken] = useState();
+	const [expiresIn, setExpiresIn] = useState();
+
+	useEffect(() => {
+		console.log('mounting ...');
+
+		axios
+			.post('XXX/login', {
+				code,
+			})
+			.then((res) => {
+				setAccessToken(res.data.accessToken);
+				setRefreshToken(res.data.refreshToken);
+				setExpiresIn(res.data.expiresIn);
+				console.log(res.data);
+				window.history.pushState({}, null, '/');
+			})
+			.catch(() => {
+				window.location = '/';
+			});
+
+		return () => {
+			console.log('unmounting ...');
+		};
+	}, [code]);
+
+	return accessToken;
+}
+```
+
+```javascript
+// Dashboard.jsx
+
+export default function Dashboard({ code }) {
+	const accessToken = useAuth(code);
+	return <div>{code}</div>;
+}
 ```
 
 ---
@@ -93,12 +162,12 @@ app.post('/login', (req, res) => {
   - `server.js`: All info regarding our backend
 - `src`
   - `assets`
-  - `App.jsx`: Pass through our Login component
-  - `Dashboard.jsx`: XXX
-  - `Login.jsx`: Where we build and send auth GET requests
-  - `main.jsx`
-- `index.html`
-- `vite.config.js`
+  - `App.jsx`: Pass through our components to display based on user auth
+  - `Dashboard.jsx`: What users see after logging in
+  - `Login.jsx`: Where we build and send our auth GET request
+  - `main.jsx`: We disable "StrictMode" until a future React update addresses useEffect running twice
+- `index.html`: Our HTML include basic meta information
+- `vite.config.js`: Vite's take on the config file
 
 ---
 
@@ -124,6 +193,7 @@ Frontend
 
 - React via [Vite](https://vitejs.dev/)
 - [Spotify for Developers](https://developer.spotify.com/)
+- [Axios](https://www.npmjs.com/package/axios#installing)
 - [Bootstrap](https://www.npmjs.com/package/bootstrap)
 - [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
 
@@ -132,6 +202,9 @@ Backend
 - [Express](https://www.npmjs.com/package/express)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [cors](https://www.npmjs.com/package/cors)
+- [body parser](https://www.npmjs.com/package/body-parser)
 
 ---
 
@@ -139,6 +212,7 @@ Backend
 
 - Fully adopt Airbnb's JS coding style guide
 - Incorporate automated testing
+- Reutilize React's StrictMode and update `useAuth.jsx` to account for useEffect() firing twice
 
 ---
 
