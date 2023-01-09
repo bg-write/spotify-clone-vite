@@ -355,6 +355,40 @@ export default function TrackSearchResult({ track, chooseTrack }) {
 }
 ```
 
+### Step 7: Display Song Lyrics
+
+And finally, for the initial build, update `Dashboard` with a new useEffect to return lyrics and add the "lyrics finder" package to our `server`.
+
+```javascript
+// Dashboard.jsx
+
+useEffect(() => {
+	if (!playingTrack) return;
+
+	axios
+		.get('XXX/lyrics', {
+			params: {
+				track: playingTrack.title,
+				artist: playingTrack.artist,
+			},
+		})
+		.then((res) => {
+			setLyrics(res.data.lyrics);
+		});
+}, [playingTrack]);
+```
+
+```javascript
+// server.js
+
+app.get('/lyrics', async (req, res) => {
+	const lyrics =
+		(await lyricsFinder(req.query.artist, req.query.track)) || 'No Lyrics Found';
+	res.json({ lyrics });
+});
+
+```
+
 ---
 
 ## Code Architecture
@@ -411,6 +445,7 @@ Backend
 - [Cors](https://www.npmjs.com/package/cors)
 - [Body Parser](https://www.npmjs.com/package/body-parser)
 - [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Lyrics finder](https://www.npmjs.com/package/lyrics-finder)
 
 ---
 
