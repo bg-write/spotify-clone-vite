@@ -1,10 +1,10 @@
 /*
-building our GET request for auth
 see "request user authorization" section of Spotify docs:
 https://developer.spotify.com/documentation/general/guides/authorization/code-flow/
 */
 
 import { Container } from 'react-bootstrap';
+import spotifyIconBlack from './assets/Spotify_Icon_RGB_Black.png';
 
 const GET = 'https://accounts.spotify.com/authorize';
 const CLIENT_ID = '825aa066f2c24b53ba324f21a373e94a';

@@ -429,10 +429,9 @@ Backend
 
 ## Next Steps (my "Icebox")
 
-- Follow WDS and previous repo for new server fixes
+- Follow WDS and previous repo for new server fixes (especially `Dashboard` and `Login` and `Player`)
 - Need to make images look better when enlarged on `Dashboard`
 - Flesh out the footer (refer to Candyfloss)
-- Make this repo public!
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
 - Simplify the Dashboard - there's a lot of code in there and can likely break down into more components

@@ -4,11 +4,10 @@ import TrackSearchResult from './TrackSearchResult';
 import Player from './Player';
 import { Container, Form } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-node';
-
-const CLIENT_ID = '825aa066f2c24b53ba324f21a373e94a';
+import spotifyIconBlack from './assets/Spotify_Icon_RGB_Black.png';
 
 const spotifyApi = new SpotifyWebApi({
-	clientId: CLIENT_ID,
+	clientId: '825aa066f2c24b53ba324f21a373e94a',
 });
 
 export default function Dashboard({ code }) {
@@ -58,7 +57,7 @@ export default function Dashboard({ code }) {
 			})
 
 			.catch((error) => {
-				console.log('Search ERROR', error);
+				console.log('CLIENT Search ERROR', error);
 			});
 
 		return () => (cancel = true);

@@ -20,6 +20,8 @@ export default function Player({ accessToken, trackUri }) {
 			}}
 			play={play}
 			uris={trackUri ? [trackUri] : []}
+			magnifySliderOnHover
+			name={'BG Spotify Zen Player'}
 		/>
 	);
 }

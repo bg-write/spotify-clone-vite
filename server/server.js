@@ -29,12 +29,12 @@ app.post('/refresh', (req, res) => {
 			});
 		})
 		.catch((error) => {
-			console.log(error);
+			console.log('SERVER refreshAccessToken ERROR', error);
 			res.sendStatus(400);
 		});
 });
 
-// set up our auth
+// set up auth
 app.post('/login', (req, res) => {
 	const code = req.body.code;
 
@@ -54,9 +54,9 @@ app.post('/login', (req, res) => {
 			});
 		})
 		.catch((error) => {
-			console.log(error);
+			console.log('SERVER authorizationCodeGrant ERROR', error);
 			res.sendStatus(400);
 		});
 });
 
-app.listen(3001); // make sure 3001 matches our axios calls in "useAuth" and "Dashboard"
+app.listen(3001); // make sure 3001 matches axios in "useAuth"

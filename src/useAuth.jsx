@@ -21,7 +21,8 @@ export default function useAuth(code) {
 				setExpiresIn(res.data.expiresIn);
 				window.history.pushState({}, null, '/');
 			})
-			.catch(() => {
+			.catch((error) => {
+				console.log('useAuth ERROR', error);
 				window.location = '/';
 			});
 
@@ -32,7 +33,6 @@ export default function useAuth(code) {
 
 	// keep users logged in
 	useEffect(() => {
-		// console.log('mounting ...');
 		if (!refreshToken || !expiresIn) return;
 
 		const interval = setInterval(() => {
@@ -45,13 +45,13 @@ export default function useAuth(code) {
 					setAccessToken(res.data.accessToken);
 					setExpiresIn(res.data.expiresIn);
 				})
-				.catch(() => {
+				.catch((error) => {
+					console.log('useAuth ERROR', error);
 					window.location = '/';
 				});
 		}, (expiresIn - 60) * 1000);
 
 		return () => {
-			// console.log('unmounting ...');
 			clearInterval(interval);
 		};
 	}, [refreshToken, expiresIn]);
