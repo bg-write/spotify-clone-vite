@@ -46,7 +46,7 @@ Build and return a GET request for a Spotify user's authentication via the `Logi
 const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}`;
 ```
 
-### Step 2: The server
+### Step 2: Server
 
 Initiate `server` with all our needed middleware and server information, including where we start using Spotify Web API Node). We also add our new server script to its own `package.json`).
 
@@ -153,9 +153,9 @@ export default function Dashboard({ code }) {
 }
 ```
 
-### Step 4: Refresh Token Automatically
+### Step 4: Refresh Tokens Automatically
 
-Update our auth so that users don't have to keep logging in after each hour. We do this by adding XXX to `useAuth` and XXX to our `server`.
+Update and add to our `useAuth` and `server` so that users don't have to keep logging in after each hour.
 
 ```javascript
 // useAuth.jsx
@@ -213,14 +213,79 @@ app.post('/refresh', (req, res) => {
 });
 ```
 
-### Step 5: Adding Search Functionality
+### Step 5: Search Functionality
 
-TBD
+Update our `Dashboard` with more useEffects, including our Spotify search query that we'll then map and pass along to our new component, `TrackSearchResult`.
 
 ```javascript
-//
+// Dashboard.jsx
 
+// update Spotify when our access token updates
+useEffect(() => {
+	if (!accessToken) return;
+	spotifyApi.setAccessToken(accessToken);
+}, [accessToken]);
 
+// spotify search query
+useEffect(() => {
+	if (!search) return setSearchResults([]);
+	if (!accessToken) return;
+	let cancel = false;
+
+	spotifyApi
+		.searchTracks(search)
+		.then((res) => {
+			if (cancel) return;
+			setSearchResults(
+				res.body.tracks.items.map((track) => {
+					const smallestAlbumImage = track.album.images.reduce(
+						(smallest, image) => {
+							if (image.height < smallest.height) return image;
+							return smallest;
+						},
+						track.album.images[0]
+					);
+					return {
+						artist: track.artists[0].name,
+						title: track.name,
+						uri: track.uri,
+						albumUrl: smallestAlbumImage.url,
+					};
+				})
+			);
+		})
+
+		.catch((error) => {
+			console.log('Search ERROR', error);
+		});
+
+	return () => (cancel = true);
+}, [search, accessToken]);
+
+```
+
+```javascript
+// TrackSearchResult.jsx
+
+export default function TrackSearchResult({ track }) {
+	function handlePlay() {
+		// chooseTrack(track);
+		console.log('clicked!');
+	}
+
+	return (
+		<div
+			className="d-flex m-2 align-items-center"
+			style={{ cursor: 'pointer' }}
+			onClick={handlePlay}>
+			<img src={track.albumUrl} style={{ height: '64px', width: '64px' }} />
+			<div className="ml-3">
+				<div>{track.title}</div>
+				<div className="text-muted">{track.artist}</div>
+			</div>
+		</div>
+	);
+}
 ```
 
 ---
@@ -236,6 +301,7 @@ TBD
   - `Dashboard.jsx`: What users see after logging in
   - `Login.jsx`: Where we build and send our auth GET request
   - `main.jsx`: We disable "StrictMode" until a future React update addresses useEffect running twice
+  - `TrackSearchResult`: TBD
   - `useAuth.jsx`: Stores all our custom hooks
 - `index.html`: Our HTML include basic meta information
 
@@ -259,10 +325,14 @@ Lighthouse Reports TBD
 
 ## Tech Stack, Tools & Resources
 
+Overall
+
+- [Spotify for Developers](https://developer.spotify.com/)
+- [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
+
 Frontend
 
 - React via [Vite](https://vitejs.dev/)
-- [Spotify for Developers](https://developer.spotify.com/)
 - [Axios](https://www.npmjs.com/package/axios#installing)
 - [Bootstrap](https://www.npmjs.com/package/bootstrap)
 - [React Bootstrap](https://www.npmjs.com/package/react-bootstrap)
@@ -271,10 +341,9 @@ Backend
 
 - [Express](https://www.npmjs.com/package/express)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
-- [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
-- [Dotenv](https://www.npmjs.com/package/dotenv)
 - [Cors](https://www.npmjs.com/package/cors)
-- [Body parser](https://www.npmjs.com/package/body-parser)
+- [Body Parser](https://www.npmjs.com/package/body-parser)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
 
 ---
 

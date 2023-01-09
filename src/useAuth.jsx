@@ -8,7 +8,7 @@ export default function useAuth(code) {
 
 	// set up our auth
 	useEffect(() => {
-		console.log('mounting ...');
+		// console.log('mounting ...');
 
 		axios
 			.post('http://localhost:3001/login', {
@@ -26,13 +26,13 @@ export default function useAuth(code) {
 			});
 
 		return () => {
-			console.log('unmounting ...');
+			// console.log('unmounting ...');
 		};
 	}, [code]);
 
 	// keep users logged in
 	useEffect(() => {
-		console.log('mounting ...');
+		// console.log('mounting ...');
 		if (!refreshToken || !expiresIn) return;
 
 		const interval = setInterval(() => {
@@ -51,7 +51,7 @@ export default function useAuth(code) {
 		}, (expiresIn - 60) * 1000);
 
 		return () => {
-			console.log('unmounting ...');
+			// console.log('unmounting ...');
 			clearInterval(interval);
 		};
 	}, [refreshToken, expiresIn]);
