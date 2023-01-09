@@ -1,4 +1,4 @@
-# Spotify Clone Vite: A minimalist full-stack rebuild of Spotify with album art generator - built with React and Spotify's API by Brady Gerber
+# Zen Spotify: A minimalist full-stack rebuild of Spotify with a focus on album art - built with React and Spotify's API by Brady Gerber
 
 [![GitHub issues](https://img.shields.io/github/issues/bg-write/spotify-clone-vite?style=flat-square)](https://github.com/bg-write/spotify-clone-vite/issues)
 
@@ -22,7 +22,7 @@ TBD
 
 Frontend
 
-- In your IDE of choice, in an open terminal window, enter and run `npm run dev` and open the server URL provided in the terminal output.
+- In your IDE, in an open terminal window, enter and run `npm run dev` and open the server URL provided in the terminal output.
 
 Backend
 
@@ -355,7 +355,7 @@ export default function TrackSearchResult({ track, chooseTrack }) {
 }
 ```
 
-### Step 7: Display Song Album Artwork
+### Step 7: Display The Album Artwork Of Current Song
 
 Take advantage of our "playingTrack" state and store it into a simple ternary variable we'll display in `Dashboard`.
 
@@ -376,11 +376,11 @@ let albumArtwork = playingTrack
 - `src`
   - `assets`: Home to Spotify logo images
   - `components`
-    - `Dashboard.jsx`: What users see after logging in
-    - `Login.jsx`: Where we build and send our auth GET request
-    - `Player.jsx`: Holds Spotify player functionality
-    - `TrackSearchResult`: Results seen in the Dashboard
-    - `useAuth.jsx`: Stores all our custom hooks
+    - `Dashboard.jsx`: What we see after logging in
+    - `Login.jsx`: Where we build/send our auth GET request
+    - `Player.jsx`: Spotify player functionality
+    - `TrackSearchResult`: Results in Dashboard
+    - `useAuth.jsx`: Our custom hooks
   - `App.jsx`: Pass through our Dashboard and Login
   - `main.jsx`: "StrictMode" disabled to address useEffect
 - `index.html`: Our HTML with basic meta information
@@ -391,7 +391,7 @@ let albumArtwork = playingTrack
 
 ### CSS
 
-Using Bootstrap, imported in `App.jsx`, and Rect Bootstrap.
+Using Bootstrap (imported in `App.jsx`) and Rect Bootstrap.
 
 ### The Code Itself
 
@@ -431,9 +431,9 @@ Backend
 
 ## Next Steps (my "Icebox")
 
-- Follow WDS and previous repo for new server fixes (especially `Dashboard` and `Login` and `Player`)
-- Need to make images look better when enlarged on `Dashboard`
-- Flesh out the footer in `Dashboard` (refer to Candyfloss)
+- Follow WDS and previous repo for new fixes (especially `Dashboard` and `Login` and `Player`) and add an actual style sheet
+- Need to make images look better when enlarged on `Dashboard` and update and use `assets` images and `public` favicon
+- Flesh out the footer in `Dashboard` and `Login`
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
 - Incorporate automated testing
 - Simplify `Dashboard` - there's a lot of code in there and can likely break down into more components

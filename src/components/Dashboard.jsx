@@ -100,7 +100,50 @@ export default function Dashboard({ code }) {
 				<Player accessToken={accessToken} trackUri={playingTrack?.uri} />
 			</div>
 
-			<footer>Footer To Come</footer>
+			<footer>
+				zen spotify built by brady gerber |{' '}
+				<a
+					href="https://bradygerber.com/"
+					target="_blank"
+					rel="noopener noreferrer">
+					website
+				</a>{' '}
+				|{' '}
+				<a
+					href="https://twitter.com/BradyWGerber"
+					target="_blank"
+					rel="noopener noreferrer">
+					twitter
+				</a>{' '}
+				|{' '}
+				<a
+					href="https://www.linkedin.com/in/brady-gerber/"
+					target="_blank"
+					rel="noopener noreferrer">
+					linkedin
+				</a>{' '}
+				|{' '}
+				<a
+					href="https://github.com/bg-write/spotify-clone-vite"
+					target="_blank"
+					rel="noopener noreferrer">
+					github
+				</a>{' '}
+				|{' '}
+				<a
+					href="https://myreps.datamade.us/"
+					target="_blank"
+					rel="noopener noreferrer">
+					find your local reps
+				</a>{' '}
+				|{' '}
+				<a
+					href="https://www.paypal.com/paypalme/BGerber654?locale.x=en_US"
+					target="_blank"
+					rel="noopener noreferrer">
+					donate to my coffee fund
+				</a>
+			</footer>
 		</Container>
 	);
 }
