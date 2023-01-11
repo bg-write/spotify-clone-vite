@@ -2,19 +2,19 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/bg-write/spotify-clone-vite?style=flat-square)](https://github.com/bg-write/spotify-clone-vite/issues)
 
-![Spotify clone login page](https://doodleipsum.com/700?bg=D96363&i=2950d197771be2105d7d9a91975907bc)
+![Spotify clone login page](https://doodleipsum.com/700?bg=63C8D9&i=4dd5fd75c6118b7161fca2ffd991842a)
 
 ## The Problem
 
-TBD
+I love Spotify and wanted to become more familiar with its API. I also use the Spotify desktop app, which includes a lot of extra features that are nice to have but I don't always need while listening to music.
 
 ## The Solution
 
-TBD
+Build my own Spotify!
 
 ## The Goal
 
-TBD
+To deploy Zen Spotify and further flesh out its styling to make it my new go-to music player. I also want to learn more about Spotify's API by adding and testing out new features available to me.
 
 ---
 
@@ -28,13 +28,9 @@ Backend
 
 - In another open terminal, CD into `server` and run `npm run devStart`.
 
-## Running Tests
-
-TBD
-
 ---
 
-## Steps To Building This Clone
+## Steps To Building This Spotify Clone
 
 ### Step 1: Auth
 
@@ -372,17 +368,17 @@ let albumArtwork = playingTrack
 ## Code Architecture
 
 - `server`
-  - `server.js`: All info regarding our backend and middleware
+  - `server.js`: All info for backend and middleware
 - `src`
-  - `assets`: Home to Spotify logo images
+  - `assets`: Home to the Spotify logo images
   - `components`
     - `Dashboard.jsx`: What we see after logging in
-    - `Login.jsx`: Where we build/send our auth GET request
+    - `Login.jsx`: Build/send auth GET request
     - `Player.jsx`: Spotify player functionality
-    - `TrackSearchResult`: Results in Dashboard
+    - `TrackSearchResult`: Results seen in Dashboard
     - `useAuth.jsx`: Our custom hooks
   - `App.jsx`: Pass through our Dashboard and Login
-  - `main.jsx`: "StrictMode" disabled to address useEffect
+  - `main.jsx`: "StrictMode" disabled (i.e. React18 useEffect)
 - `index.html`: Our HTML with basic meta information
 
 ---
@@ -395,11 +391,7 @@ Using Bootstrap (imported in `App.jsx`) and Rect Bootstrap.
 
 ### The Code Itself
 
-Style Guide notes TBD
-
-### Accessibility
-
-Lighthouse Reports TBD
+Zen Spotify will soon be updated to match [Airbnb's JS style guide](https://airbnb.io/javascript/) as closely as possible. This involves following [Nethmi Wijesinghe's excellent set-up guide](https://enlear.academy/how-to-set-up-airbnb-style-guide-82413ea6c5f2) for updating ESLint and Prettier to follow Airbnb's guide. Nethmi's guide also works if you wish to use another popular style guide (i.e. Google).
 
 ---
 
@@ -433,20 +425,19 @@ Backend
 
 - Follow WDS and previous repo for new fixes (especially `Dashboard` and `Login` and `Player`) and add an actual style sheet
 - Need to make images look better when enlarged on `Dashboard` and update and use `assets` images and `public` favicon
+- Incorporate automated testing
 - Flesh out the footer in `Dashboard` and `Login`
 - Fully adopt Airbnb's JS coding style guide while also cleaning up and enforcing code spacing in GitHub
-- Incorporate automated testing
-- Simplify `Dashboard` - there's a lot of code in there and can likely break down into more components
+- Run lighthouse reports to get a snapshot of current accessibility
+- Simplify `Dashboard` - there's a lot of code that can likely break down into smaller components
 - Create a 404 page
 - Anything I can include from my own "I Love That Song" project?
-- Reutilize React's StrictMode and update `useAuth` to account for useEffect() firing twice
+- Reutilize React's StrictMode and update `useAuth` to account for useEffect() firing twice due to React18 update
 
 ---
 
 ## Closing Credits
 
-A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and the initial setup of this clone.
-
----
+A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and the initial setup of this clone. Image by [Doodle Ipsum](https://doodleipsum.com/)
 
 © 2023 Brady Gerber. All Rights Reserved.

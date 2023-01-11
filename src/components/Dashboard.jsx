@@ -90,7 +90,7 @@ export default function Dashboard({ code }) {
 						<img
 							src={albumArtwork}
 							className="justify-content-center align-items-center"
-							style={{ height: '75vh' }}
+							style={{ height: '50vh' }}
 						/>
 					</div>
 				)}
@@ -101,7 +101,7 @@ export default function Dashboard({ code }) {
 			</div>
 
 			<footer>
-				zen spotify built by brady gerber |{' '}
+				zen spotify, built by brady gerber |{' '}
 				<a
 					href="https://bradygerber.com/"
 					target="_blank"

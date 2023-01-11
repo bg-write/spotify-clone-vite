@@ -23,7 +23,7 @@ export default function Login() {
 			<a className="btn btn-success btn-lg" href={AUTH_URL}>
 				login with spotify
 			</a>
-			<div>| zen spotify built by brady gerber</div>
+			<div>&ensp;zen spotify built by brady gerber</div>
 		</Container>
 	);
 }
