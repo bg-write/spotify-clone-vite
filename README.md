@@ -4,9 +4,11 @@
 
 ![Spotify clone login page](https://doodleipsum.com/700?bg=63C8D9&i=4dd5fd75c6118b7161fca2ffd991842a)
 
+(Landing page screenshot coming soon!)
+
 ## The Problem
 
-I love Spotify and wanted to become more familiar with its API. I also use the Spotify desktop app, which includes a lot of extra features that are nice to have but I don't always need while listening to music.
+I love Spotify and wanted to become more familiar with its API. I also use Spotify's desktop app, which includes a lot of extra features that are nice to have but not necessary for me while listening to music.
 
 ## The Solution
 
@@ -375,10 +377,10 @@ let albumArtwork = playingTrack
     - `Dashboard.jsx`: What we see after logging in
     - `Login.jsx`: Build/send auth GET request
     - `Player.jsx`: Spotify player functionality
-    - `TrackSearchResult`: Results seen in Dashboard
+    - `TrackSearchResult`: Outputs in Dashboard
     - `useAuth.jsx`: Our custom hooks
   - `App.jsx`: Pass through our Dashboard and Login
-  - `main.jsx`: "StrictMode" disabled (i.e. React18 useEffect)
+  - `main.jsx`: "StrictMode" disabled (i.e. React18 useEffect update; please see notes below)
 - `index.html`: Our HTML with basic meta information
 
 ---
@@ -438,6 +440,6 @@ Backend
 
 ## Closing Credits
 
-A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and the initial setup of this clone. Image by [Doodle Ipsum](https://doodleipsum.com/)
+A special shout-out to Web Dev Simplified's [Spotify clone tutorial](https://flask.palletsprojects.com/en/2.2.x/quickstart/) for introducing the basics of Spotify's API and the initial setup of this clone. Image by [Doodle Ipsum](https://doodleipsum.com/).
 
 © 2023 Brady Gerber. All Rights Reserved.
