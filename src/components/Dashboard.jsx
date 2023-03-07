@@ -4,7 +4,7 @@ import TrackSearchResult from './TrackSearchResult';
 import Player from './Player';
 import { Container, Form } from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-node';
-import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
+// import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: '825aa066f2c24b53ba324f21a373e94a',
@@ -69,15 +69,15 @@ export default function Dashboard({ code }) {
 		: 'https://picsum.photos/500';
 
 	return (
-		<Container className="d-flex flex-column py-2" style={{ height: '100vh' }}>
+		<Container id="dashboard-container" className="d-flex flex-column py-2">
 			<Form.Control
 				type="search"
-				placeholder="Search songs or artists ..."
+				placeholder="Search for a song or artist ..."
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 			/>
 
-			<div className="flex-grow-1 my-2" style={{ overflowY: 'auto' }}>
+			<div id="dashboard-display" className="flex-grow-1 my-2">
 				{searchResults.map((track) => (
 					<TrackSearchResult
 						track={track}
@@ -86,17 +86,17 @@ export default function Dashboard({ code }) {
 					/>
 				))}
 				{searchResults.length === 0 && (
-					<div className="text-center" style={{ whiteSpace: 'pre' }}>
+					<div id="dashboard-results" className="text-center">
 						<img
 							src={albumArtwork}
+							id="dashboard-image"
 							className="justify-content-center align-items-center"
-							style={{ height: '50vh' }}
 						/>
 					</div>
 				)}
 			</div>
 
-			<div>
+			<div id="dashboard-player-container">
 				<Player accessToken={accessToken} trackUri={playingTrack?.uri} />
 			</div>
 

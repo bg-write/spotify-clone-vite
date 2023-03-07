@@ -30,6 +30,8 @@ Backend
 
 - In another open terminal, CD into `server` and run `npm run devStart`.
 
+NOTE: Web player functionality is restricted to Spotify premium users only.
+
 ---
 
 ## Steps To Building This Spotify Clone
@@ -159,28 +161,28 @@ Update `useAuth` and `server` so that users don't have to keep logging in after 
 // useAuth.jsx
 
 useEffect(() => {
-		console.log('mounting ...');
-		if (!refreshToken || !expiresIn) return;
+	console.log('mounting ...');
+	if (!refreshToken || !expiresIn) return;
 
-		const interval = setInterval(() => {
-			axios
-				.post('XXX/refresh', {
-					refreshToken,
-				})
-				.then((res) => {
-					setAccessToken(res.data.accessToken);
-					setExpiresIn(res.data.expiresIn);
-				})
-				.catch(() => {
-					window.location = '/';
-				});
-		}, (expiresIn - 60) * 1000);
+	const interval = setInterval(() => {
+		axios
+			.post('XXX/refresh', {
+				refreshToken,
+			})
+			.then((res) => {
+				setAccessToken(res.data.accessToken);
+				setExpiresIn(res.data.expiresIn);
+			})
+			.catch(() => {
+				window.location = '/';
+			});
+	}, (expiresIn - 60) * 1000);
 
-		return () => {
-			console.log('unmounting ...');
-			clearInterval(interval);
-		};
-	}, [refreshToken, expiresIn]);
+	return () => {
+		console.log('unmounting ...');
+		clearInterval(interval);
+	};
+}, [refreshToken, expiresIn]);
 ```
 
 ```javascript
@@ -236,13 +238,10 @@ useEffect(() => {
 			if (cancel) return;
 			setSearchResults(
 				res.body.tracks.items.map((track) => {
-					const smallestAlbumImage = track.album.images.reduce(
-						(smallest, image) => {
-							if (image.height < smallest.height) return image;
-							return smallest;
-						},
-						track.album.images[0]
-					);
+					const smallestAlbumImage = track.album.images.reduce((smallest, image) => {
+						if (image.height < smallest.height) return image;
+						return smallest;
+					}, track.album.images[0]);
 					return {
 						artist: track.artists[0].name,
 						title: track.name,
@@ -259,7 +258,6 @@ useEffect(() => {
 
 	return () => (cancel = true);
 }, [search, accessToken]);
-
 ```
 
 ```javascript
@@ -391,6 +389,16 @@ let albumArtwork = playingTrack
 
 Using Bootstrap (imported in `App.jsx`) and Rect Bootstrap.
 
+`style.css` holds the majority of CSS and follows [Spotify's Design Guidelines](https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo).
+
+```css
+:root {
+	--spotify-green: #1db954;
+	--spotify-white: #ffffff;
+	--spotify-black: #191414;
+}
+```
+
 ### The Code Itself
 
 Zen Spotify will soon be updated to match [Airbnb's JS style guide](https://airbnb.io/javascript/) as closely as possible. This involves following [Nethmi Wijesinghe's excellent set-up guide](https://enlear.academy/how-to-set-up-airbnb-style-guide-82413ea6c5f2) for updating ESLint and Prettier to follow Airbnb's guide. Nethmi's guide also works if you wish to use another popular style guide (i.e. Google).
@@ -404,6 +412,7 @@ Overall
 - [Spotify for Developers](https://developer.spotify.com/)
 - [Spotify Web API](https://developer.spotify.com/documentation/web-api/reference/#/)
 - [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node)
+- [Spotify Design Guidelines](https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo)
 
 Frontend
 
@@ -425,6 +434,8 @@ Backend
 
 ## Next Steps (my "Icebox")
 
+- Connect the API to a database a la [DynamoDB](https://aws.amazon.com/dynamodb/?refid=94bf4df1-96e1-4046-a020-b07a2be0d712); do the [AWS serverless workshop](https://github.com/aws-samples/aws-serverless-workshops/tree/master/WebApplication) first?
+- Look into [Terraform](https://www.terraform.io/)?
 - Follow WDS and previous repo for new fixes (especially `Dashboard` and `Login` and `Player`) and add an actual style sheet
 - Need to make images look better when enlarged on `Dashboard` and update and use `assets` images and `public` favicon
 - Incorporate automated testing

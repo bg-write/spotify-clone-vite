@@ -4,6 +4,7 @@ const cors = require('cors');
 const SpotifyWebAPI = require('spotify-web-api-node');
 
 const app = express();
+const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -59,4 +60,6 @@ app.post('/login', (req, res) => {
 		});
 });
 
-app.listen(3001); // make sure 3001 matches axios in "useAuth"
+app.listen(port, () => {
+	console.log(`server started at http://localhost:${port}`);
+}); // make sure 3001 matches axios in "useAuth"

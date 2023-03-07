@@ -1,0 +1,42 @@
+/* OFFICIAL SPOTIFY STYLE GUIDE: https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo */
+
+:root {
+	--spotify-green: #1db954;
+	--spotify-white: #ffffff;
+	--spotify-black: #191414;
+}
+
+#login-container {
+	min-height: 100vh;
+	color: var(--spotify-black);
+}
+
+#login-button {
+	background-color: var(--spotify-green);
+	color: var(--spotify-white);
+}
+
+#dashboard-container {
+	height: 100vh;
+}
+
+#dashboard-display {
+	overflow-y: auto;
+}
+
+#dashboard-results {
+	white-space: pre;
+}
+
+#dashboard-image {
+	height: 50vh;
+}
+
+#track-search-result {
+	cursor: pointer;
+}
+
+#track-search-result-image {
+	height: 64px;
+	width: 64px;
+}

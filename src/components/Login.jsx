@@ -4,7 +4,7 @@ https://developer.spotify.com/documentation/general/guides/authorization/code-fl
 */
 
 import { Container } from 'react-bootstrap';
-import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
+// import spotifyIconBlack from '../assets/Spotify_Icon_RGB_Black.png';
 
 const GET = 'https://accounts.spotify.com/authorize';
 const CLIENT_ID = '825aa066f2c24b53ba324f21a373e94a';
@@ -18,9 +18,9 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 export default function Login() {
 	return (
 		<Container
-			className="d-flex justify-content-center align-items-center"
-			style={{ minHeight: '100vh' }}>
-			<a className="btn btn-success btn-lg" href={AUTH_URL}>
+			id="login-container"
+			className="d-flex justify-content-center align-items-center">
+			<a id="login-button" className="btn btn-lg" href={AUTH_URL}>
 				login with spotify
 			</a>
 			<div>&ensp;zen spotify built by brady gerber</div>
