@@ -4,11 +4,11 @@
 
 ![Spotify clone login page](https://doodleipsum.com/700?bg=63C8D9&i=4dd5fd75c6118b7161fca2ffd991842a)
 
-(Landing page screenshot coming soon!)
+(Screenshots of landing page coming soon!)
 
 ## The Problem
 
-I love Spotify and wanted to become more familiar with its API. I also use Spotify's desktop app, which includes a lot of extra features that are nice to have but not necessary for me while listening to music.
+I love Spotify and wanted to become more familiar with its API, and I use Spotify's desktop app, which includes a lot of extra features that are nice to have but are not necessary for me while listening to music.
 
 ## The Solution
 
@@ -16,7 +16,7 @@ Build my own Spotify!
 
 ## The Goal
 
-To deploy Zen Spotify and further flesh out its styling to make it my new go-to music player. I also want to learn more about Spotify's API by adding and testing out new features available to me.
+To deploy Zen Spotify and flesh out its styling to make it my new go-to music player. I also want to learn more about Spotify's API by adding and testing out new features available to me.
 
 ---
 
@@ -48,7 +48,7 @@ const AUTH_URL = `${GET}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&r
 
 ### Step 2: Server
 
-Initiate `server` with all our needed middleware and server info, including where we start using Spotify Web API Node. We also add our new server script to its own `package.json`.
+Initiate `server` with all our needed middleware and server information, including where we start using Spotify Web API Node. We also add our new server script to its own `package.json`.
 
 ```javascript
 // server.js
@@ -62,7 +62,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const REDIRECT_URI = 'XXX';
+const REDIRECT_URI = 'XXX'; // leaving blank for the README
 
 app.post('/login', (req, res) => {
 	const code = req.body.code;
@@ -105,7 +105,7 @@ function App() {
 }
 ```
 
-Then create a custom hook (`useAuth`) to move the auth process away from the browser into our state and `Dashboard` while also incorporating our new server.
+Then create a custom hook (`useAuth`) to move the auth process away from the browser and into our state and `Dashboard` while also incorporating our new server.
 
 (WINTER 2023 NOTE: The React 18 update now runs useEffect twice instead of once; while we wait for a future React update, I've updated `main.jsx` to disable "StrictMode.")
 
@@ -284,7 +284,7 @@ export default function TrackSearchResult({ track }) {
 }
 ```
 
-### Step 6: Actually Play Music
+### Step 6: Actually Play The Music
 
 Create the `Player` component and add in the React Spotify Web Playback package to give us functionality to actually play specific songs. Update `Dashboard` and `TrackSearchResult` accordingly.
 
@@ -351,7 +351,7 @@ export default function TrackSearchResult({ track, chooseTrack }) {
 }
 ```
 
-### Step 7: Display The Album Artwork Of Current Song
+### Step 7: Display The Album Artwork Of The Current Song
 
 Take advantage of our "playingTrack" state and store it into a simple ternary variable we'll display in `Dashboard`.
 
